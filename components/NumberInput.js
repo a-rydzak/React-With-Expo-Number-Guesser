@@ -4,18 +4,10 @@ import {TextInput, StyleSheet } from "react-native";
 export default function NumberInput(props){
 
     return(
-        <TextInput maxLength={4} style={{...styles.input, ...props.style}}  onChangeText={text => onChangeText(text)}/>
+        <TextInput  maxLength={3} {...props} keyboardType="number-pad" placeholder="0-100" style={{...styles.input, ...props.style}}  />
     )
 
-    function isNumber(value){
-        return Number.isInteger(value)
-    }
-
-    function onChangeText(value){
-        console.log(value)
-    }
-
-}
+} 
 
 const styles = StyleSheet.create({
     input:{
@@ -25,4 +17,3 @@ const styles = StyleSheet.create({
         marginTop:10,
     },
 })
-

@@ -8,15 +8,20 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
+import styles from "./startGameScreenCss";
 import Card from "../components/Card";
 import Colors from "../constants/colors";
 import NumberInput from "../components/NumberInput";
 
 const StartGameScreen = (props) => {
+  // State
   const [numValue, setNumValue] = useState("");
   const [confirmed, setConfirmed] = useState(false);
   const [staticValue, setStaticValue] = useState(0);
+
+  // HTML
   return (
+    // enables the numberpad to go away when user clicks a blank space
     <TouchableWithoutFeedback
       onPress={() => {
         Keyboard.dismiss();
@@ -55,13 +60,15 @@ const StartGameScreen = (props) => {
     </TouchableWithoutFeedback>
   );
 
+  // Helper functions
   function confirmedView() {
-    return <Card style={{...styles.inputContainer,marginTop:20}}>
-              <Text>You entered</Text>
-              <Text>{staticValue}</Text>
-           </Card>;
+    return (
+      <Card style={{ ...styles.inputContainer, ...styles.guessContainer}}>
+        <Text>You entered</Text>
+        <Text style={styles.guessedNumber}>{staticValue}</Text>
+      </Card>
+    );
   }
-
   function resetValue() {
     setNumValue("");
   }
@@ -93,7 +100,6 @@ const StartGameScreen = (props) => {
   function onChangeText(value) {
     setNumValue(value.replace(/[^0-9]/g, ""));
   }
-
   function isNumber(value) {
     if (value === "") return false;
 
@@ -105,38 +111,6 @@ const StartGameScreen = (props) => {
     return Number.isInteger(parseInt(value));
   }
 };
-const styles = StyleSheet.create({
-  screen: {
-    width: "100%",
-    flex: 1,
-    padding: 10,
-    alignItems: "center",
-  },
-  title: {
-    fontSize: 20,
-    marginVertical: 10,
-  },
-  inputContainer: {
-    width: 300,
-    maxWidth: "80%",
-    alignItems: "center",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    width: "100%",
-    justifyContent: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 15,
-    elevation: 5,
-    borderRadius: 20,
-  },
-  input: {
-    textAlign: "center",
-    width: 50,
-  },
-  button: {
-    width: 100,
-  },
-});
+
 
 export default StartGameScreen;

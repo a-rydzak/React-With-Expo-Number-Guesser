@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import styles from './startGameScreenCss';
 import Card from '../components/Card';
+import DefaultStyles from '../constants/default-styles';
 
 export default function GameScreen(props){
 
@@ -11,7 +12,7 @@ export default function GameScreen(props){
     return(
         <View style={styles.screen}>
             <Card style={{ ...styles.inputContainer, ...styles.guessContainer}}>
-            <Text>Opponents Guess</Text>
+            <Text style={DefaultStyles.title}>Opponents Guess</Text>
             <Text style={styles.guessedNumber}>{currentGuess}</Text>
             </Card>
         </View>

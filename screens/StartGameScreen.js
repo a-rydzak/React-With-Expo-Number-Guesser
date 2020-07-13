@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState,useRef, useEffect } from "react";
+// useRf is a hook that enables state survivability on component re rendering
+// you can update constants in components this way, that way you don't re render the component
+
+// useEffect allow something to happen after a render, an effect after initializing state
 import {
   View,
   Text,
-  StyleSheet,
   Button,
   TouchableWithoutFeedback,
   Keyboard,
@@ -12,6 +15,7 @@ import styles from "./startGameScreenCss";
 import Card from "../components/Card";
 import Colors from "../constants/colors";
 import NumberInput from "../components/NumberInput";
+import GameScreen from "./GameScreen";
 
 const StartGameScreen = (props) => {
   // State
@@ -63,14 +67,18 @@ const StartGameScreen = (props) => {
   // Helper functions
   function confirmedView() {
     return (
-      <Card style={{ ...styles.inputContainer, ...styles.guessContainer}}>
-        <Text>You entered</Text>
-        <Text style={styles.guessedNumber}>{staticValue}</Text>
-      </Card>
+      <View>
+        <Card style={{ ...styles.inputContainer, ...styles.guessContainer}}>
+          <Text>You entered</Text>
+          <Text style={styles.guessedNumber}>{staticValue}</Text>
+        </Card>
+        <GameScreen userChoice={numValue}/>
+      </View>
     );
   }
   function resetValue() {
     setNumValue("");
+    setConfirmed(false);
   }
   function confirmInputHandler() {
     if (numValue.length > 1 && numValue[0] == "0") {
@@ -91,6 +99,7 @@ const StartGameScreen = (props) => {
     if (Number.isInteger(parseInt(numValue))) {
       setConfirmed(true);
       setStaticValue(numValue);
+      
     } else {
       Alert.alert("Please Enter A Whole Number!");
       setConfirmed(false);
@@ -98,6 +107,7 @@ const StartGameScreen = (props) => {
     }
   }
   function onChangeText(value) {
+    setConfirmed(false);
     setNumValue(value.replace(/[^0-9]/g, ""));
   }
   function isNumber(value) {

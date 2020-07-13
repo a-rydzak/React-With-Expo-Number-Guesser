@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       fontSize:25,
       borderRadius:5,
-      width:50,
+      width:60,
       height:50,
       borderWidth:2,
       color:Colors.accent,

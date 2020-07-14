@@ -16,8 +16,9 @@ const fetchFonts = () => {
 
 export default function App() {
 
+  const [gameNumber, setgameNumber] = useState(generateRandomBetween(0,101));
   const [dataLoaded, setDataLoaded] = useState(false);
-
+  const [allGuesses, setAllGuesses] = useState([])
   if (!dataLoaded) {
     return (
       <AppLoading
@@ -27,12 +28,20 @@ export default function App() {
       />
     );
   }
+
   return (
     <View style={styles.container}>
       <Header title='Hello Motto 2'/>
-      <StartGameScreen/>
+      <StartGameScreen allGuesses={allGuesses} setAllGuesses={setAllGuesses} winningNumber={gameNumber} resetGameNumber={setgameNumber}/>
     </View>
   );
+
+  function generateRandomBetween(min, max){
+    min = Math.ceil(min);
+    max = Math.ceil(max);
+    const rndNum = Math.floor(Math.random() * (max-min)) + min;
+    return rndNum
+}
 }
 
 const styles = StyleSheet.create({

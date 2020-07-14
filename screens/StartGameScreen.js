@@ -25,6 +25,8 @@ const StartGameScreen = (props) => {
 
   // HTML
   return (
+
+    // props.gameNumber, props.setgameNumber
     // enables the numberpad to go away when user clicks a blank space
     <TouchableWithoutFeedback
       onPress={() => {
@@ -66,13 +68,15 @@ const StartGameScreen = (props) => {
 
   // Helper functions
   function confirmedView() {
+
     return (
       <View>
         <Card style={{ ...styles.inputContainer, ...styles.guessContainer}}>
           <Text>You entered</Text>
           <Text style={styles.guessedNumber}>{staticValue}</Text>
+          {props.winningNumber == staticValue? <Text>You Won!!</Text>: null}
         </Card>
-        <GameScreen userChoice={numValue}/>
+        <GameScreen allGuesses={props.allGuesses} setAllGuesses={props.setAllGuesses} userChoice={numValue} winningNumber={props.winningNumber}/>
       </View>
     );
   }
@@ -98,8 +102,10 @@ const StartGameScreen = (props) => {
     }
     if (Number.isInteger(parseInt(numValue))) {
       setConfirmed(true);
+      const updatedGuesses= [...props.allGuesses]
+      updatedGuesses.push(parseInt(numValue));
+      props.setAllGuesses(updatedGuesses)
       setStaticValue(numValue);
-      
     } else {
       Alert.alert("Please Enter A Whole Number!");
       setConfirmed(false);

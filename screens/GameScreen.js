@@ -3,7 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import styles from './startGameScreenCss';
 import Card from '../components/Card';
 import DefaultStyles from '../constants/default-styles';
-
+import BodyText from '../components/BodyText';
 export default function GameScreen(props){
 
     const [currentGuess, setCurrentGuess] = useState(generateRandomBetween(1, 101, props.userChoice))
@@ -18,9 +18,10 @@ export default function GameScreen(props){
         <View style={styles.screen}>
             <Card style={{ ...styles.inputContainer, ...styles.guessContainer}}>
             <Text style={DefaultStyles.title}>Opponents Guess</Text>
-            <Text style={styles.guessedNumber}>{currentGuess}</Text>
+            <BodyText style={styles.guessedNumber}>{currentGuess}</BodyText>
             {props.winningNumber == currentGuess? <Text>Computer Won!!</Text>: null}
             </Card>
+            
         </View>
     )
 

@@ -5,7 +5,7 @@ import { AppLoading } from 'expo';
 
 import Header from './components/Header';
 import StartGameScreen from './screens/StartGameScreen';
-
+import GameOverScreen from './screens/GameOverScreen';
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -18,7 +18,9 @@ export default function App() {
 
   const [gameNumber, setgameNumber] = useState(generateRandomBetween(0,101));
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
   const [allGuesses, setAllGuesses] = useState([])
+  const [guessRounds, setGuessRounds] = useState(0)
   if (!dataLoaded) {
     return (
       <AppLoading
@@ -29,12 +31,28 @@ export default function App() {
     );
   }
 
+  const configureNewGameHandler = () => {
+    setGuessRounds(0);
+    setUserNumber(null);
+  };
+
+  let gameContent = (<StartGameScreen allGuesses={allGuesses} setAllGuesses={setAllGuesses} winningNumber={gameNumber} resetGameNumber={setgameNumber}/>);
+  let overContent = (
+    <GameOverScreen
+      roundsNumber={guessRounds}
+      userNumber={gameNumber}
+      onRestart={configureNewGameHandler}
+    />
+  );
   return (
     <View style={styles.container}>
       <Header title='Hello Motto 2'/>
-      <StartGameScreen allGuesses={allGuesses} setAllGuesses={setAllGuesses} winningNumber={gameNumber} resetGameNumber={setgameNumber}/>
+      {gameOver===true? overContent: gameContent}
     </View>
   );
+  }
+
+ 
 
   function generateRandomBetween(min, max){
     min = Math.ceil(min);
@@ -42,7 +60,7 @@ export default function App() {
     const rndNum = Math.floor(Math.random() * (max-min)) + min;
     return rndNum
 }
-}
+
 
 const styles = StyleSheet.create({
   container: {

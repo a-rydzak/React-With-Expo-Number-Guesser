@@ -21,6 +21,7 @@ export default function App() {
   const [gameOver, setGameOver] = useState(false);
   const [allGuesses, setAllGuesses] = useState([])
   const [guessRounds, setGuessRounds] = useState(0)
+
   if (!dataLoaded) {
     return (
       <AppLoading
@@ -33,10 +34,11 @@ export default function App() {
 
   const configureNewGameHandler = () => {
     setGuessRounds(0);
-    setUserNumber(null);
+    setgameNumber(generateRandomBetween(0,101));
+    setGameOver(false)
   };
 
-  let gameContent = (<StartGameScreen allGuesses={allGuesses} setAllGuesses={setAllGuesses} winningNumber={gameNumber} resetGameNumber={setgameNumber}/>);
+  let gameContent = (<StartGameScreen allGuesses={allGuesses} setGameOver={setGameOver} setAllGuesses={setAllGuesses} winningNumber={gameNumber} resetGameNumber={setgameNumber}/>);
   let overContent = (
     <GameOverScreen
       roundsNumber={guessRounds}
@@ -53,14 +55,12 @@ export default function App() {
   }
 
  
-
   function generateRandomBetween(min, max){
     min = Math.ceil(min);
     max = Math.ceil(max);
     const rndNum = Math.floor(Math.random() * (max-min)) + min;
     return rndNum
 }
-
 
 const styles = StyleSheet.create({
   container: {

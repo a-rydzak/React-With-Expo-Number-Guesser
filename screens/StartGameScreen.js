@@ -126,6 +126,9 @@ const StartGameScreen = (props) => {
     }
     return Number.isInteger(parseInt(value));
   }
+  function gameOverMan(){
+    props.setGameOver(true);
+  }
 };
 
 
